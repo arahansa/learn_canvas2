@@ -26,11 +26,6 @@
         ctx.closePath();
     };
 
-    function drawLineLinked(ctx, sx, sy, ex, ey){
-        ctx.moveTo(sx , sy);
-        ctx.lineTo(ex, ey);
-    };
-
     function getYPos(x){
         return (10 - (x/1000))*16 + 20;
     }
@@ -105,6 +100,14 @@
     ctx.font = '10px serif';
     ctx.fillStyle = "#3b3632";
     ctx.strokeStyle = "#28241f";
+    // const blue = "#16aba7";
+    // const blueA = "rgba(22, 171, 167, 0.4)";
+    const blue = "rgb(2, 192, 118)";
+    const blueA = "rgba(2, 192, 118, 0.4)";
+    /*const red = "#e61d79";
+    const redA = 'rgba(230, 29, 121, 0.4)';*/
+    const red = "rgb(248, 73, 96)";
+    const redA = "rgba(248, 73, 96, 0.4)";
     ctx.lineWidth= 1;
 
     let firstTextWidth;
@@ -128,8 +131,11 @@
         if(i==0){
             posYBottomHeight = posY;
         }
-        ctx.fillText(text, posX, posY);
-        drawLine(ctx, posXStartChart, posY-2, canvas.width, posY-2);
+        if(1==0){
+            ctx.fillText(text, posX, posY);
+            drawLine(ctx, posXStartChart, posY-2, canvas.width, posY-2);
+        }
+
     }
 
     const posXCenterLine =  ( canvas.width - posXStartChart ) / 2 + posXStartChart;
@@ -140,7 +146,7 @@
     drawLine(ctx, posXCenterLine, 0, posXCenterLine , canvas.height);
 
     // 경계선 작업 시작
-    ctx.strokeStyle = "#16aba7";
+    ctx.strokeStyle = blue;
 
     const widthBetweenData =  ( posXCenterLine - posXStartChart ) / 11;
     let posXStartData = (widthBetweenData / 2);
@@ -177,7 +183,7 @@
             ctx.lineTo(posXStartChartArea, posYBottomHeightArea);
         }
     }
-    ctx.fillStyle = 'rgba(22, 171, 167, 0.4)';
+    ctx.fillStyle = blueA;
     ctx.fill();  //채우기
     ctx.closePath();
 
@@ -209,8 +215,8 @@
 
     // 2차 영역
     ctx.beginPath();
-    ctx.strokeStyle = "#e61d79";
-    ctx.fillStyle = 'rgba(230, 29, 121, 0.4)';
+    ctx.strokeStyle = red;
+    ctx.fillStyle = redA;
     for(let i=0;i<data2.length;i++){
         if(i==0){
             posXLast = posXCenterLine+posXStartData;
