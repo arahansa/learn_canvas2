@@ -1,0 +1,242 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+    <title>Canvas</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style>
+        canvas#canvas{
+            background-color: #1b1815;
+        }
+    </style>
+</head>
+<style>
+    body{padding: 5%;text-align: center;}
+    canvas{border: 1px solid gray;border-radius: 3px;}
+</style>
+<body>
+<canvas width='600' height='203' id='canvas' ></canvas>
+
+<script>
+    function drawLine(ctx, sx, sy, ex, ey){
+
+        ctx.beginPath();
+        ctx.moveTo(sx , sy);
+        ctx.lineTo(ex, ey);
+        ctx.stroke();
+        ctx.closePath();
+    };
+
+    function drawLineLinked(ctx, sx, sy, ex, ey){
+        ctx.moveTo(sx , sy);
+        ctx.lineTo(ex, ey);
+    };
+
+    function getYPos(x){
+        return (10 - (x/1000))*16 + 20;
+    }
+
+    const data1 = [{
+        "hoga": 900,
+        "price": 8990,
+    }, {
+        "hoga": 910,
+        "price": 8900,
+    }, {
+        "hoga": 920,
+        "price": 8600,
+    }, {
+        "hoga": 930,
+        "price": 8000,
+    }, {
+        "hoga": 940,
+        "price": 7800,
+    }, {
+        "hoga": 950,
+        "price": 7100,
+    }, {
+        "hoga": 960,
+        "price": 6900,
+    }, {
+        "hoga": 970,
+        "price": 5400,
+    }, {
+        "hoga": 980,
+        "price": 5000,
+    }, {
+        "hoga": 990,
+        "price": 3500,
+    }]
+
+    const data2 = [{
+        "hoga": 1000,
+        "price": 4000,
+    }, {
+        "hoga": 1010,
+        "price": 4500,
+    }, {
+        "hoga": 1020,
+        "price": 4800,
+    }, {
+        "hoga": 1030,
+        "price": 5000,
+    }, {
+        "hoga": 1040,
+        "price": 6000,
+    }, {
+        "hoga": 1050,
+        "price": 7000,
+    }, {
+        "hoga": 1060,
+        "price": 8000,
+    }, {
+        "hoga": 1070,
+        "price": 8500,
+    }, {
+        "hoga": 1080,
+        "price": 8600,
+    }, {
+        "hoga": 1090,
+        "price": 8780,
+    },
+    ];
+
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    ctx.font = '10px serif';
+    ctx.fillStyle = "#3b3632";
+    ctx.strokeStyle = "#28241f";
+    ctx.lineWidth= 1;
+
+    let firstTextWidth;
+    let posXStartChart;
+    let posYTopHeight = 20;
+    let posYBottomHeight;
+
+
+    for(let i = 10; i >= 0; i--){
+
+        let text = 1000 * i;
+        let textWidth = ctx.measureText(text).width;
+        let isFirst = i == 10;
+        if(isFirst){
+            firstTextWidth = textWidth;
+            posXStartChart = 30 + firstTextWidth;
+        }
+        let posX = (20 + (firstTextWidth - textWidth));
+        let posY = (( 10 - i ) * 16) + 20;
+        console.log('y :', posY);
+        if(i==0){
+            posYBottomHeight = posY;
+        }
+        ctx.fillText(text, posX, posY);
+        drawLine(ctx, posXStartChart, posY-2, canvas.width, posY-2);
+    }
+
+    const posXCenterLine =  ( canvas.width - posXStartChart ) / 2 + posXStartChart;
+    const ratioY = posYBottomHeight - posYTopHeight;
+    console.log(ratioY);
+
+    drawLine(ctx, posXStartChart, 0, posXStartChart , canvas.height);
+    drawLine(ctx, posXCenterLine, 0, posXCenterLine , canvas.height);
+
+    // 경계선 작업 시작
+    ctx.strokeStyle = "#16aba7";
+
+    const widthBetweenData =  ( posXCenterLine - posXStartChart ) / 11;
+    let posXStartData = (widthBetweenData / 2);
+
+    let posXLast;
+    let posYLast;
+    let posYFirst;
+
+    // 데이터 영역 시작
+    let posXStartChartArea = posXStartChart + 1;
+    let posYBottomHeightArea =  posYBottomHeight - 3;
+
+    ctx.beginPath();
+    for(let i=0;i<data1.length;i++){
+        if(i==0){
+            posXLast = posXStartChart+posXStartData;
+            posYLast = getYPos(data1[i].price);
+            posYFirst = posYLast;
+            ctx.moveTo(posXStartChartArea, posYLast);
+            ctx.lineTo(posXLast, posYLast);
+        }
+        // 가로 한 줄
+        let posXNext = posXLast+widthBetweenData;
+        ctx.lineTo(posXNext, posYLast);
+        posXLast = posXNext;
+
+        // 다음 거 미리 받아서 내려감
+        if(i+1 !== data1.length){
+            let posYNext = getYPos(data1[i+1].price);
+            ctx.lineTo(posXLast, posYNext);
+            posYLast = posYNext;
+        }else{
+            ctx.lineTo(posXLast, posYBottomHeightArea);
+            ctx.lineTo(posXStartChartArea, posYBottomHeightArea);
+        }
+    }
+    ctx.fillStyle = 'rgba(22, 171, 167, 0.4)';
+    ctx.fill();  //채우기
+    ctx.closePath();
+
+    ctx.beginPath();
+    for(let i=0;i<data1.length;i++){
+        if(i==0){
+            posXLast = posXStartChart+posXStartData;
+            posYLast = getYPos(data1[i].price);
+            posYFirst = posYLast;
+            ctx.moveTo(posXStartChartArea, posYLast);
+            ctx.lineTo(posXLast, posYLast);
+        }
+        // 가로 한 줄
+        let posXNext = posXLast+widthBetweenData;
+        ctx.lineTo(posXNext, posYLast);
+        posXLast = posXNext;
+
+        // 다음 거 미리 받아서 내려감
+        if(i+1 !== data1.length){
+            let posYNext = getYPos(data1[i+1].price);
+            ctx.lineTo(posXLast, posYNext);
+            posYLast = posYNext;
+        }else{
+            ctx.lineTo(posXLast, posYBottomHeightArea);
+        }
+    }
+    ctx.stroke();
+    ctx.closePath();
+
+    // 2차 영역
+    ctx.beginPath();
+    ctx.strokeStyle = "#e61d79";
+    ctx.fillStyle = 'rgba(230, 29, 121, 0.4)';
+    for(let i=0;i<data2.length;i++){
+        if(i==0){
+            posXLast = posXCenterLine+posXStartData;
+            ctx.moveTo(posXCenterLine+posXStartData, posYBottomHeightArea);
+            posYLast = getYPos(data2[i].price);
+            ctx.lineTo(posXLast, posYLast);
+        }
+        // 가로 한 줄
+        let posXNext = posXLast+widthBetweenData;
+        ctx.lineTo(posXNext, posYLast);
+        posXLast = posXNext;
+
+        // 다음 거 미리 받아서 내려감
+        if(i+1 !== data2.length){
+            let posYNext = getYPos(data2[i+1].price);
+            ctx.lineTo(posXLast, posYNext);
+            posYLast = posYNext;
+        }else{
+            ctx.lineTo(canvas.width+2, posYLast);
+            ctx.lineTo(canvas.width+2, posYBottomHeightArea);
+            ctx.stroke();
+        }
+    }
+    ctx.fill();  //채우기
+    ctx.closePath();
+
+</script>
+</body>
+</html>

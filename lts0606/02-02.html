@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+    <title>Canvas</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<style>
+    body{padding: 5%;text-align: center;}
+    canvas{border: 1px solid gray;border-radius: 3px;}
+</style>
+<body>
+<canvas width='600' height='600' id='canvas' ></canvas>
+</body>
+</html>
+
+<!--
+* 정리하여보자!
+
+ 1. fillStyle
+
+   1) 윤곽선과 채움 색의 초기 설정값은 검은색이다.
+   2) html에서 사용되는 여러 색상 코드를 다양하게 사용 할 수 있다. (rgba까지도)
+   3) 영역의 색상을 채우는 데 사용된다.
+
+ 2. fillRect
+
+   1) 사각형을 그리는 함수(x좌표, y좌표, 넓이, 높이)이다.
+   2) fill()함수와 stroke() 함수에 영향을 받지 않는다.
+   아무리 fill과 stroke을 호출하더라도 아무짓(?) 안한다.
+
+   3) 함수의 자체에서 경로의 시작과 종료가 실행이 된다.
+      선, 원 그리기 등 과 조금 다른 개념이다.
+-->
+<script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    //사각형 그리기
+    ctx.fillStyle = 'red';
+    ctx.fillRect(10, 10, 30, 30);
+
+
+    //1번원 그리기
+    ctx.strokeStyle = 'green';
+    ctx.fillStyle = 'green';
+    ctx.arc(60, 130, 30, 0, Math.PI * 2, true);
+    ctx.stroke();
+    ctx.fill();
+    ctx.closePath();  //종료를 알림.
+
+    ctx.beginPath();  //다른 그리기를 위해 시작을 다시 알림
+    ctx.strokeStyle = 'blue';
+    ctx.fillStyle = 'blue';
+    ctx.arc(160, 130, 30, 0, Math.PI * 2, true);
+    ctx.stroke();
+    ctx.fill();
+    ctx.closePath();  //종료를 알림.
+
+</script>

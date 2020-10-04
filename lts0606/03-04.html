@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+    <title>Canvas</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<style>
+    body{padding: 5%;text-align: center;}
+    canvas{border: 1px solid gray;border-radius: 3px;}
+</style>
+<body>
+<canvas width='600' height='600' id='canvas' ></canvas>
+</body>
+</html>
+
+<script>
+    const lineWidth = 5;   //선의 굵기
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    ctx.lineWidth = lineWidth;
+    ctx.lineCap = 'butt';
+
+    ctx.beginPath();
+    ctx.moveTo(lineWidth / 2,0);   //0값을 선의 절반값으로 바꾸자.
+    ctx.lineTo(30, 30);
+    ctx.lineTo(30, 90);
+    ctx.lineTo(lineWidth / 2, 90); //0값을 선의 절반값으로 바꾸자.
+    ctx.lineTo(lineWidth / 2, 0);  //0값을 선의 절반값으로 바꾸자.
+    ctx.stroke();
+</script>

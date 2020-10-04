@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+    <title>Canvas</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<style>
+    body{padding: 5%;text-align: center;}
+    canvas{border: 1px solid gray;border-radius: 3px;}
+</style>
+<body>
+<canvas width='600' height='600' id='canvas' ></canvas>
+</body>
+</html>
+<script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    ctx.lineWidth = 10;
+
+    ctx.beginPath();
+    ctx.moveTo(30,10);
+    ctx.lineTo(30,60);
+    ctx.lineCap = 'butt';
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(60,10);
+    ctx.lineTo(60,60);
+    ctx.lineCap = 'round';
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(90,10);
+    ctx.lineTo(90,60);
+    ctx.lineCap = 'square';
+    ctx.stroke();
+</script>

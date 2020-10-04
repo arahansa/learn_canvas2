@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+    <title>Canvas</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<style>
+    body{padding: 5%;text-align: center;}
+    canvas{border: 1px solid gray;border-radius: 3px;}
+</style>
+<body>
+<canvas width='600' height='600' id='canvas' ></canvas>
+</body>
+</html>
+
+<script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const colors = ['red', '#fff179', 'rgb(62,185,116)', 'rgba(78,62,185,0.4)' ];
+
+    ctx.fillStyle = colors[0];
+    ctx.fillRect(10, 10, 20, 20);
+
+    ctx.fillStyle = colors[1];
+    ctx.fillRect(50, 10, 20, 20);
+
+    ctx.fillStyle = colors[2];
+    ctx.fillRect(90, 10, 20, 20);
+
+    ctx.fillStyle = colors[3];
+    ctx.fillRect(130, 10, 20, 20);
+</script>
