@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        canvas{
+            background-color: #1b1815;
+            width: 150px;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+hi
+<canvas id="canvas"></canvas>
+<canvas id="canvas2"></canvas>
+<script src="./deptchChartRenderer.min.js"></script>
+<script>
+
+    const askRenderer = new DepthChartRender(document.getElementById('canvas'), 'rgba(230, 29, 121, 0.6)', "ASK");
+    fetch('./ask.json').then(response => {
+        return response.json();
+    }).then(data => {
+        askRenderer.render(data);
+    }).catch(err => {
+        // Do something for an error here
+    });
+
+    const bidRenderer = new DepthChartRender(document.getElementById('canvas2'), "rgba(2, 192, 118, 0.4)", "BID");
+    fetch('./bid.json').then(response => {
+        return response.json();
+    }).then(data => {
+        bidRenderer.render(data);
+    }).catch(err => {
+
+    })
+</script>
+</body>
+</html>
